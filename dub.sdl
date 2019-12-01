@@ -1,0 +1,6 @@
+name "hello-d"
+description "Hello REST API Impl in D"
+dependency "vibe-d" version="~>0.8.6"
+dependency "vibe-d:tls" version="*"
+subConfiguration "vibe-d:tls" "openssl-1.1"
+versions "VibeDefaultMain"

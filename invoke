@@ -1,0 +1,4 @@
+curl -iw "\n" http://localhost:8080/alive
+
+curl -iw "\n" http://localhost:8080/hello
+curl -iw "\n" http://localhost:8080/hello?name=Gerald
