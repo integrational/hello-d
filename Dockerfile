@@ -1,26 +1,14 @@
-FROM dlang2/dmd-ubuntu:2.089.0 AS builder
-WORKDIR /
+FROM dlang2/ldc-ubuntu:beta AS builder
+WORKDIR /build
 COPY . .
-RUN dub -v build
+RUN dub build -f -n -b release
 
-#
-# either:
-#
-FROM ubuntu:bionic
-RUN \
-  apt-get update && \
-  apt-get install -y zlib1g libssl1.1 && \
-  rm -rf /var/lib/apt/lists/*
-#
-# or (but doesn't work):
-#
-#FROM scratch
-#COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
-#
-# and then:
-#
-WORKDIR /
-COPY --from=builder /hello-d .
+FROM ubuntu:18.04
+RUN apt-get update && \
+    apt-get install -y zlib1g libssl1.1 && \
+    rm -rf /var/lib/apt/lists/*
 USER nobody
+WORKDIR /app
+COPY --from=builder /build/hello-d ./app
 EXPOSE 8080
-ENTRYPOINT ["./hello-d"]
+ENTRYPOINT ["./app"]

@@ -1,0 +1,15 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/hello-d
+hello-d.so
+hello-d.dylib
+hello-d.dll
+hello-d.a
+hello-d.lib
+hello-d-test-*
+*.exe
+*.o
+*.obj
+*.lst

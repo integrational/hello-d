@@ -1,0 +1,15 @@
+{
+	"name": "hello-d",
+	"description": "A minimal REST API impl in D",
+	"authors": ["Gerald Loeffler"],
+	"copyright": "Copyright © 2019, Gerald Loeffler",
+	"license": "whatever",
+	"dependencies": {
+		"vibe-d": "~>0.8.6",
+		"vibe-d:tls": "~>0.8.6"
+	},
+	"subConfigurations": {
+		"vibe-d:tls": "openssl-1.1"
+	},
+	"versions": ["VibeDefaultMain"]
+}

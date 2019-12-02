@@ -1,0 +1,1 @@
+docker run --rm --name hello-d -p 8080:8080 integrational/hello-d
