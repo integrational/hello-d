@@ -5,54 +5,47 @@ import std.typecons : Nullable;
 
 shared static this()
 {
-    logInfo("Environment dump");
-    auto env = environment.toAA;
-    foreach(k, v; env)
-        logInfo("%s = %s", k, v);
-
-    auto host = environment.get("APP_HOST", "0.0.0.0");
-    auto port = to!ushort(environment.get("APP_PORT", "8080"));
-
-    auto router = new URLRouter;
-    router.registerRestInterface(new HelloImpl());
+    auto host = environment.get( "HOST", "0.0.0.0");
+    auto port = to!ushort( environment.get( "PORT", "8080"));
 
     auto settings = new HTTPServerSettings;
     settings.port = port;
-    settings.bindAddresses = [host];
+    settings.bindAddresses = [ host];
 
-    listenHTTP(settings, router);
+    auto router = new URLRouter;
+    router.registerRestInterface( new GreetingResourceImpl());
 
-    logInfo("API listening on http://%s:%d/hello", host, port);
+    listenHTTP( settings, router);
 }
 
-interface Hello
+interface GreetingResource
 {
-    @method(HTTPMethod.GET)
-    @path("hello")
-    @queryParam("name", "name")
-    Msg hello(Nullable!string name);
+    @method( HTTPMethod.GET)
+    @path( "hello")
+    @queryParam( "name", "name")
+    Greeting hello(Nullable!string name);
 
-    @method(HTTPMethod.GET)
-    @path("alive")
+    @method( HTTPMethod.GET)
+    @path( "alive")
     string alive();
 }
 
-class HelloImpl : Hello
+class GreetingResourceImpl : GreetingResource
 {
-    Msg hello(Nullable!string name) @safe
+    Greeting hello(Nullable!string name) @safe
     {
-        logInfo("hello called");
-        return Msg(format("Hello %s", name.isNull ? "World!" : name));
+        logInfo( "hello called");
+        return Greeting( format( "Hello %s", name.isNull ? "World!" : name));
     }
 
     string alive() @safe
     {
-        logInfo("alive called");
+        logInfo( "alive called");
         return "OK";
     }
 }
 
-struct Msg
+struct Greeting
 {
     string msg;
 }

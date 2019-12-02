@@ -13,3 +13,6 @@ hello-d-test-*
 *.o
 *.obj
 *.lst
+.idea
+*.iml
+
